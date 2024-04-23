@@ -42,7 +42,7 @@
   font-family: 'Poppins', sans-serif;
 }
 
-.search {
+.searchForm {
   width: 100%;
   position: relative;
   display: flex;
@@ -67,7 +67,7 @@
   color: #282c34;
 }
 
-.dropdown-filter {
+.dropdownFilter {
   color: #282c34;
   margin-right: 20px;
   padding: 5px;
