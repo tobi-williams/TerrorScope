@@ -9,8 +9,10 @@ Backend: The backend is Node.js
 Database: MariaDB hosted on AWS RDS
 
 Installation
-Before you begin, ensure that the latest version of Node.js is installed, also install npm
-
-To run:
+- Before you begin, ensure that the latest version of Node.js is installed
 - Clone the repository to a local directory
-- 
+- Open a terminal and navigate to the backend (node folder)
+- Run "npm ci" to install dependencies
+- Navigate to the frontend (terror_scope folder)
+- Run "npm ci" to install dependencies
+- Run "npm start" 

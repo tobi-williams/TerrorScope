@@ -1,17 +1,15 @@
-// server/index.js
-
 const express = require('express');
 const mariadb = require('mysql2');
-const credentials = require('./credentials');
+require('./credentials');
 const PORT = process.env.PORT || 3001;
 
 const app = express();
 
 const connectionPool = mariadb.createPool({
-    host: 'localhost', //AWS RDS MariaDB endpoint
-    user: 'root',
-    password: '9uC1.q92L*9)w,dC',
-    database: 'terrorisminfo_db',
+    host: process.env.DBHOSTNAME, //AWS RDS MariaDB endpoint
+    user: process.env.DBUSER,
+    password: process.env.DBPASSWD,
+    database: process.env.DBNAME,
     port: '3306',
     connectionLimit: 10
 });
