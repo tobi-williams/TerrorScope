@@ -1,10 +1,17 @@
-import './AdminLogin.css';
+import '../styling/AdminLogin.css';
 import React from 'react';
 
-function adminLogin() {
+function AdminLogin() {
+    // const [data, setData] = React.useState(null);
 
+    // React.useEffect(() => {
+    //     fetch("/api")
+    //     .then((res) => res.json())
+    //     .then((data) => setData(data.message));
+    // }, []);
 
     return (
+        
         <div class="login-box">
             <h2>Login</h2>
             <form>
@@ -16,7 +23,7 @@ function adminLogin() {
                     <input type="password" name="" required=""/>
                     <label>Password</label>
                 </div>
-                <a href="#">
+                <a href="/home">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -28,4 +35,4 @@ function adminLogin() {
     );
 }
 
-export default adminLogin;
+export default AdminLogin;
