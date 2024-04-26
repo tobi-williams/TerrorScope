@@ -119,3 +119,7 @@
   flex: 1 1 auto;
   background-color: #282c34;
 }
+
+.content h1 {
+  color: white;
+}
