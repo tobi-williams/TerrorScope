@@ -7,30 +7,48 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 function SearchResults() {
 
     const [data, setData] = React.useState(null);
+    const [searchClick, setSearchClick] = React.useState(false);
 
     React.useEffect(() => {
-        fetch("http://localhost:3001/api")
-        .then(res => {
-            if (!res.ok) {
-                // If server status code is not OK, throw an error with the status
-                console.log("HTTP Error");
-                throw new Error(`HTTP error! Status: ${res.status}`);
-            }
-            //console.log(res.json());
-            console.log("HTTP OK");
-            return res.json();
-        })
-        .then(data => {
-            console.log(data);
-            setData(data);
-        })
-        .catch((error) => console.error('Error fetching data:', error));
-    }, []);
+        if (searchClick) {
+            setSearchClick(false);
+            
+            fetch("http://localhost:3001/api", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    search: searchTerm,
+                    filter: filterTerm
+                })
+            })
+            .then(res => {
+                if (!res.ok) {
+                    // If server status code is not OK, throw an error with the status
+                    console.log("HTTP Error");
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+                //console.log(res.json());
+                console.log("HTTP OK");
+                return res.json();
+            })
+            .then(data => {
+                console.log(data);
+                setData(data);
+            })
+            .catch((error) => console.error('Error fetching data:', error));
+        }
+        else {
+            return;
+        }
+        // eslint-disable-next-line
+    }, [searchClick]);
     //console.log(data);
 
     const [searchTerm, setSearchTerm] = useState(''); // State to store the search term
 
-    const [dropdownFilter, setFilterTerm] = useState(''); // State to store the filter term
+    const [filterTerm, setFilterTerm] = useState(''); // State to store the filter term
   
     // Function to update the search term state as the user types
     const handleInputChange = (event) => {
@@ -45,8 +63,9 @@ function SearchResults() {
     // Function to handle what happens when the search button is clicked
     const handleSearch = (event) => {
       event.preventDefault();
-      console.log('Submitting search for:', searchTerm, 'with filter:', dropdownFilter); // For now, just log the search term
+      console.log('Submitting search for:', searchTerm, 'with filter:', filterTerm); // For now, just log the search term
       // Here, you might set another state to trigger a re-render or display search results
+      setSearchClick(true);
     };
 
     return (
@@ -64,13 +83,13 @@ function SearchResults() {
                             <select
                             className="dropdownFilterSR"
                             name="dropdownFilterSR"
-                            value={dropdownFilter}
+                            value={filterTerm}
                             onChange={handleFilterChange}
                             >
                             <option value="">Filter</option>
                             <option value="location">Location</option>
                             <option value="year">Year</option>
-                            <option value="group">Group</option>
+                            <option value="perp">Perpetrator</option>
                             <option value="weapon">Weapon Type</option>
                             </select>
 
