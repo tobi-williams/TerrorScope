@@ -17,6 +17,13 @@ const connectionPool = mariadb.createPool({
     connectionLimit: 10
 });
 
+app.post("/api/id", (req, res) => {
+    const { id } = req.body;
+    const query = "query";
+    res.json('Query Recieved');
+    console.log(id);
+});
+
 app.post("/api", (req, res) => {
     const { search, filter } = req.body;
     const query = "SELECT event_details.event_id AS id, concat_ws('/', event_month, event_day, event_year) as 'event date', coalesce(motive, 'MOTIVE UNKNOWN') as motive, coalesce(summary, 'SUMMARY UNAVAILABLE') as summary FROM event_details where cast(event_id as char) like ?";
