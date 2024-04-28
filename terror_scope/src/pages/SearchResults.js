@@ -1,14 +1,33 @@
 import '../styling/SearchResults.css';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import { useLocation } from 'react-router-dom';
 import Table from '../components/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-function SearchResults() {
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+}
 
+function SearchResults() {
+    const [searchTerm, setSearchTerm] = useState(''); // State to store the search term
+    const [filterTerm, setFilterTerm] = useState(''); // State to store the filter term
     const [data, setData] = React.useState(null);
     const [searchClick, setSearchClick] = React.useState(false);
+    const query = useQuery();
+    const [runOnce, setRunOnce] = React.useState(true);
 
+    useEffect(() => {
+        if (runOnce) {
+            setSearchTerm(query.get('s'));
+            setFilterTerm(query.get('f'));
+            console.log(searchTerm);
+            setSearchClick(true);
+            setRunOnce(false);
+        }
+        // eslint-disable-next-line
+    }, [query]);
+    
     React.useEffect(() => {
         if (searchClick) {
             setSearchClick(false);
@@ -45,10 +64,6 @@ function SearchResults() {
         // eslint-disable-next-line
     }, [searchClick]);
     //console.log(data);
-
-    const [searchTerm, setSearchTerm] = useState(''); // State to store the search term
-
-    const [filterTerm, setFilterTerm] = useState(''); // State to store the filter term
   
     // Function to update the search term state as the user types
     const handleInputChange = (event) => {
@@ -65,7 +80,9 @@ function SearchResults() {
       event.preventDefault();
       console.log('Submitting search for:', searchTerm, 'with filter:', filterTerm); // For now, just log the search term
       // Here, you might set another state to trigger a re-render or display search results
-      setSearchClick(true);
+      if (searchTerm !== ''){
+        setSearchClick(true);
+      }
     };
 
     return (

@@ -16,6 +16,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/search" element={<SearchResults />} />
+          <Route path="/searchXL" element={<Home />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
       </BrowserRouter>

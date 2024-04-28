@@ -24,3 +24,12 @@ th {
 tbody {
     color: #DDB250;
 }
+
+th:hover {
+    cursor: default;
+}
+
+tr:hover {
+    background-color: #14161A;
+    cursor: pointer;
+}

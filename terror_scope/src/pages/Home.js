@@ -1,5 +1,6 @@
 import '../styling/Home.css';
 import React, {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 // import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import Home from './pages/Home';
 // import About from './pages/About';
@@ -11,7 +12,9 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 function Home() {
   const [searchTerm, setSearchTerm] = useState(''); // State to store the search term
 
-  const [dropdownFilter, setFilterTerm] = useState(''); // State to store the filter term
+  const [filterTerm, setFilterTerm] = useState(''); // State to store the filter term
+
+  const navigate = useNavigate();
 
   // Function to update the search term state as the user types
   const handleInputChange = (event) => {
@@ -26,8 +29,11 @@ function Home() {
   // Function to handle what happens when the search button is clicked
   const handleSearch = (event) => {
     event.preventDefault();
-    console.log('Submitting search for:', searchTerm, 'with filter:', dropdownFilter); // For now, just log the search term
+    console.log('Submitting search for:', searchTerm, 'with filter:', filterTerm); // For now, just log the search term
     // Here, you might set another state to trigger a re-render or display search results
+    if (searchTerm !== '') {
+      navigate(`/search?s=${encodeURIComponent(searchTerm)}&f=${encodeURIComponent(filterTerm)}`);
+    }
   };
 
   return (
@@ -50,7 +56,7 @@ function Home() {
             <select
               className="dropdownFilter"
               name="dropdownFilter"
-              value={dropdownFilter}
+              value={filterTerm}
               onChange={handleFilterChange}
             >
               <option value="">Filter</option>
