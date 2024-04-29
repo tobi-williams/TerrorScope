@@ -6,13 +6,15 @@ Description: This project is a web application that implements the Global Terror
 Development Resources
 Frontend: The frontend of this project is designed using React
 Backend: The backend is Node.js
-Database: MariaDB hosted on AWS RDS
+Database: MariaDB
 
 Installation
 - Before you begin, ensure that the latest version of Node.js is installed
 - Clone the repository to a local directory
 - Open a terminal and navigate to the backend (node folder)
 - Run "npm ci" to install dependencies
+- Navigate to node\server\index.js and modify the database connection credentials
+  
 - Navigate to the frontend (terror_scope folder)
 - Run "npm ci" to install dependencies
 - Run "npm start" 
