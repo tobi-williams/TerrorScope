@@ -1,65 +1,44 @@
-//import React, { useState, useEffect } from 'react';
-//import axios from 'axios';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, MarkerF } from '@react-google-maps/api';
 import '../styling/DetailsBody.css';
+require('../credentials');
 
-const containerStyle = {
-  width: '90%',
-  height: '1000px'
-};
 
-const center = {
-  lat: -3.745,
-  lng: -38.523
-};
-
-function EventDetails({ data }) {
-//   const [eventData, setEventData] = useState({});
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     const fetchEventData = async () => {
-//       try {
-//         const response = await axios.get(`https://yourapi.com/events/${match.params.id}`);
-//         setEventData(response.data);
-//         setLoading(false);
-//       } catch (error) {
-//         console.error('Error fetching event data:', error);
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchEventData();
-//   }, [match.params.id]);
-
-//   if (loading) return <div>Loading...</div>;
+function DetailsBody({ data }) {
+  const containerStyle = {
+    width: '90%',
+    height: '1000px'
+  };
+  
+  const center = {
+    lat: Number(data[0].latitude),
+    lng: Number(data[0].longitude)
+  };
 
   return (
-    <div>
-      {/* <h1>Event Details</h1> */}
-      <p>Date: {/*{eventData.date}*/}</p>
-      <p>Location: {/*{eventData.location}*/}</p>
-      <p>Damage: {/*{eventData.damage}*/}</p>
-      <p>Number Killed: {/*{eventData.numberKilled}*/}</p>
-      <p>Damage Summary: {/*{eventData.damageSummary}*/}</p>
-      <p>Attack Type: {/*{eventData.attackType}*/}</p>
-      <p>Number of Perpetrators: {/*{eventData.numberOfPerpetrators}*/}</p>
-      <p>Method of Claim: {/*{eventData.methodOfClaim}*/}</p>
-      <p>Perpetrator Group: {/*{eventData.perpetratorGroup}*/}</p>
-      <p>Target: {/*{eventData.target}*/}</p>
-      <p>Weapons Used: {/*{eventData.weaponsUsed}*/}</p>
-      <p>Weapon Detail: {/*{eventData.weaponDetail}*/}</p>
-      <p>Motive: {/*{eventData.motive}*/}</p>
-      <p>Summary: {/*{eventData.summary}*/}</p>
+    <div className='details-container'>
+      <p>Date: {data[0].date}</p>
+      <p>Location: {data[0].location}</p>
+      <p>Property Damage? (Damage Extent): {data[0].damage}</p>
+      <p>Number Killed (Wounded): {data[0].numberKilled}</p>
+      <p>Damage Summary: {data[0].damageSummary}</p>
+      <p>Attack Type: {data[0].attackType}</p>
+      <p>Number of Perpetrators (Perpetrators Captured): {data[0].numberOfPerpetrators}</p>
+      <p>Claimed? (Method of Claim): {data[0].methodOfClaim}</p>
+      <p>Perpetrator Group: {data[0].perpetratorGroup}</p>
+      <p>Target: {data[0].target}</p>
+      <p>Weapons Used: {data[0].weaponsUsed}</p>
+      <p>Weapon Detail: {data[0].weaponDetail}</p>
+      <p>Motive: {data[0].motive}</p>
+      <p>Summary: {data[0].summary}</p>
 
       <div className='map-container'>
-        <LoadScript googleMapsApiKey="AIzaSyBQGiETWXo3vIB7Ts333aE41C9kS9NI4VQ">
+        <LoadScript googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}>
             <GoogleMap
             mapContainerStyle={containerStyle}
             center={center}
-            zoom={10}
+            zoom={12}
             >
-                <Marker position={center} />
+                <MarkerF position={center} />
             </GoogleMap>
         </LoadScript>
       </div>
@@ -67,4 +46,4 @@ function EventDetails({ data }) {
   );
 }
 
-export default EventDetails;
+export default DetailsBody;

@@ -12,12 +12,14 @@ function useQuery() {
 function SearchResults() {
     const [searchTerm, setSearchTerm] = useState(''); // State to store the search term
     const [filterTerm, setFilterTerm] = useState(''); // State to store the filter term
-    const [data, setData] = React.useState(null);
-    const [searchClick, setSearchClick] = React.useState(false);
+    const [data, setData] = useState(null);
+    const [searchClick, setSearchClick] = useState(false);
     const query = useQuery();
-    const [runOnce, setRunOnce] = React.useState(true);
+    const [runOnce, setRunOnce] = useState(true);
 
+    // Get search term and filter passed in from homepage through URL
     useEffect(() => {
+        // This only needs to be done once
         if (runOnce) {
             setSearchTerm(query.get('s'));
             setFilterTerm(query.get('f'));
@@ -28,7 +30,8 @@ function SearchResults() {
         // eslint-disable-next-line
     }, [query]);
     
-    React.useEffect(() => {
+    // Retrieve requested event information from backend API call
+    useEffect(() => {
         if (searchClick) {
             setSearchClick(false);
             
@@ -48,12 +51,10 @@ function SearchResults() {
                     console.log("HTTP Error");
                     throw new Error(`HTTP error! Status: ${res.status}`);
                 }
-                //console.log(res.json());
                 console.log("HTTP OK");
                 return res.json();
             })
             .then(data => {
-                console.log(data);
                 setData(data);
             })
             .catch((error) => console.error('Error fetching data:', error));
@@ -63,7 +64,6 @@ function SearchResults() {
         }
         // eslint-disable-next-line
     }, [searchClick]);
-    //console.log(data);
   
     // Function to update the search term state as the user types
     const handleInputChange = (event) => {
@@ -78,8 +78,8 @@ function SearchResults() {
     // Function to handle what happens when the search button is clicked
     const handleSearch = (event) => {
       event.preventDefault();
-      console.log('Submitting search for:', searchTerm, 'with filter:', filterTerm); // For now, just log the search term
-      // Here, you might set another state to trigger a re-render or display search results
+      console.log('Submitting search for:', searchTerm, 'with filter:', filterTerm);
+
       if (searchTerm !== ''){
         setSearchClick(true);
       }
@@ -134,8 +134,6 @@ function SearchResults() {
             </header>
 
             <main className='content'>
-                {/* Database results go here */}
-                {/* {data ? <p>{JSON.stringify(data[0].event_month)}</p> : <p>Loading...</p>} */}
                 <div>
                     <h1>Search Results</h1>
                     <Table data={data} />

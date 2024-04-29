@@ -16,25 +16,6 @@ function Table({ data }) {
     }
 
     return (
-        // <table>
-        //     <thead>
-        //         <tr>
-        //             {Object.keys(data[0]).map(key => (
-        //                 <th key={key}>{key.toUpperCase()}</th>
-        //             ))}
-        //         </tr>
-        //     </thead>
-        //     <tbody>
-        //         {data.map((item, index) => (
-        //             <tr key={index}>
-        //                 {Object.values(item).map((val, idx) => (
-        //                     <td key={idx}>{val}</td>
-        //                 ))}
-        //             </tr>
-        //         ))}
-        //     </tbody>
-        // </table>
-
         <table>
             <thead>
                 <tr>
@@ -45,7 +26,7 @@ function Table({ data }) {
             </thead>
             <tbody>
                 {data.map((item, index) => (
-                    <tr key={item.id || index} onClick={() => handleRowClick(item.id)}> {/* Use ID if available, otherwise fallback to index */}
+                    <tr key={item.id || index} onClick={() => handleRowClick(item.id)}>
                         {Object.entries(item).map(([key, val], idx) => (
                             key !== 'id' ? <td key={idx}>{val}</td> : null // Exclude 'id' from display
                         ))}

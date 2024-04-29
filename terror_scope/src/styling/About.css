@@ -19,7 +19,6 @@
   .about-container h2 {
     margin-bottom: 0px;
     padding-left: 100px;
-    margin-left: 15%;
     color: #DDB250;
     font-size: xx-large;
   }
@@ -36,7 +35,6 @@
   
   .about-container ul {
     padding-left: 100px;
-    margin-left: 15%;
     list-style-type: none;
     color: white;
     font-size: x-large;

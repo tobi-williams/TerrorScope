@@ -13,16 +13,19 @@ function useQuery() {
 function DetailsPage() {
     const [searchTerm, setSearchTerm] = useState(''); // State to store the search term
     const [filterTerm, setFilterTerm] = useState(''); // State to store the filter term
-    const [data, setData] = React.useState(null);
+    const [data, setData] = useState('');
     const [id, setID] = useState(0);
     const navigate = useNavigate();
     const query = useQuery();
+    const [isLoading, setIsLoading] = useState(true);
 
+    // Get the event ID from the url data
     useEffect(() => {
         setID(query.get('id'));
     }, [query]);
     
-    React.useEffect(() => {
+    // Backend API call to retrieve event details
+    useEffect(() => {
         fetch("http://localhost:3001/api/id", {
                 method: 'POST',
                 headers: {
@@ -38,15 +41,18 @@ function DetailsPage() {
                     console.log("HTTP Error");
                     throw new Error(`HTTP error! Status: ${res.status}`);
                 }
-                //console.log(res.json());
                 console.log("HTTP OK");
                 return res.json();
             })
             .then(data => {
-                console.log(data);
+                //console.log(data);
                 setData(data);
+                setIsLoading(false);
             })
-            .catch((error) => console.error('Error fetching data:', error));
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+                setIsLoading(false);
+            });
             
     }, [id]);
     //console.log(data);
@@ -64,8 +70,8 @@ function DetailsPage() {
     // Function to handle what happens when the search button is clicked
     const handleSearch = (event) => {
       event.preventDefault();
-      console.log('Submitting search for:', searchTerm, 'with filter:', filterTerm); // For now, just log the search term
-      // Here, you might set another state to trigger a re-render or display search results
+      console.log('Submitting search for:', searchTerm, 'with filter:', filterTerm);
+
       if (searchTerm !== ''){
         navigate(`/search?s=${encodeURIComponent(searchTerm)}&f=${encodeURIComponent(filterTerm)}`);
       }
@@ -119,13 +125,15 @@ function DetailsPage() {
                 </nav>
             </header>
 
-            <main className='content'>
-                {/* Database results go here */}
-                {/* {data ? <p>{JSON.stringify(data[0].event_month)}</p> : <p>Loading...</p>} */}
-                <div>
-                    <h1>Event Details (ID: {id}) </h1>
-                    <DetailsBody data={data} />
-                </div>
+            <main className='content'> { /* Load the body page only when the data has meaningful input */ }
+                {isLoading || !data || (Array.isArray(data) && data.length === 0) ? (
+                    <p>Loading...</p>
+                ) : (
+                    <div>
+                        <h1>Event Details (ID: {id}) </h1> 
+                        <DetailsBody data={data} />
+                    </div>
+                )}
             </main>
         </div>
     );

@@ -1,11 +1,6 @@
 import '../styling/Home.css';
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { BrowserRouter, Routes, Route } from 'react-router-dom';
-// import Home from './pages/Home';
-// import About from './pages/About';
-// import AdminLogin from './pages/AdminLogin';
-// import SearchResults from './pages/SearchResults';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
@@ -29,8 +24,9 @@ function Home() {
   // Function to handle what happens when the search button is clicked
   const handleSearch = (event) => {
     event.preventDefault();
-    console.log('Submitting search for:', searchTerm, 'with filter:', filterTerm); // For now, just log the search term
-    // Here, you might set another state to trigger a re-render or display search results
+    console.log('Submitting search for:', searchTerm, 'with filter:', filterTerm); 
+    
+    // If searchbox is not empty, navigate to results page
     if (searchTerm !== '') {
       navigate(`/search?s=${encodeURIComponent(searchTerm)}&f=${encodeURIComponent(filterTerm)}`);
     }
@@ -62,7 +58,7 @@ function Home() {
               <option value="">Filter</option>
               <option value="location">Location</option>
               <option value="year">Year</option>
-              <option value="group">Group</option>
+              <option value="perp">Perpetrator</option>
               <option value="weapon">Weapon Type</option>
             </select>
 

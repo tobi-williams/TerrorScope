@@ -24,8 +24,8 @@
 }
 
 
-p {
-    color: #DDB250;
+.details-container p {
+    color: white;
     line-height: 1.5;
     margin-bottom: 10px;
     text-align: justify;

@@ -1,4 +1,4 @@
-import '../styling/About.css'; // Import the CSS for this page
+import '../styling/About.css';
 
 function AboutPage() {
   return (
